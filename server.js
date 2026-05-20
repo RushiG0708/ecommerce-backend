@@ -25,7 +25,25 @@ const app = express();
 
 app.use(helmet());
 app.use(morgan("dev"));
-app.use(cors({ origin: process.env.CLIENT_URL, credentials: true }));
+const allowedOrigins = [
+  process.env.CLIENT_URL,
+  "https://ecommerce-frontend-seven-sandy.vercel.app",
+  "https://ecommerce-frontend-git-main-rushig0708s-projects.vercel.app",
+  "http://localhost:5173",
+];
+
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error(`CORS blocked: ${origin}`));
+      }
+    },
+    credentials: true,
+  }),
+);
 app.use(express.json());
 app.use(cookieParser());
 
