@@ -35,6 +35,12 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
+      const allowedOrigins = [
+        process.env.CLIENT_URL,
+        "https://ecommerce-frontend-seven-sandy.vercel.app",
+        "https://ecommerce-frontend-git-main-rushig0708s-projects.vercel.app",
+        "http://localhost:5173",
+      ];
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
